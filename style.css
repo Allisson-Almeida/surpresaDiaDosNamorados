@@ -1,0 +1,308 @@
+/* ======================== */
+/* RESET + BASE + TIPO      */
+/* ======================== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Dancing Script', cursive;
+  background: linear-gradient(to bottom, #ffd3dc, #ffe8ec);
+  overflow: hidden;
+}
+
+/* ======================== */
+/* TOPO                     */
+/* ======================== */
+#mensagem-topo {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  text-align: center;
+  font-size: 1.8rem;
+  color: #a0003d;
+  font-weight: bold;
+  height: 40px;
+  z-index: 50;
+}
+
+/* ======================== */
+/* CONTAINER CENTRAL        */
+/* ======================== */
+#envelope-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ======================== */
+/* ENVELOPE                 */
+/* ======================== */
+.envelope {
+  position: relative;
+  width: 400px;
+  height: 280px;
+  transition: all 0.8s ease;
+  z-index: 2;
+  transition: transform 1.2s ease;
+}
+
+/* Aba do envelope */
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 200px solid transparent;
+  border-right: 200px solid transparent;
+  border-bottom: 120px solid #e63946;
+  z-index: 0; /* sempre por cima da carta */
+  transform-origin: top center;
+  transition: transform 0.8s ease;
+}
+
+.envelope.abrir .envelope-flap {
+  z-index: 0; /* Aba vai para trás da carta */
+  
+}
+
+/* Corpo inferior do envelope */
+.envelope-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 400px;
+  height: 160px;
+  background-color: #e63946;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden; /* ESSENCIAL para esconder a carta */
+  z-index: 2;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Quando o envelope for aberto */
+.envelope.abrir .carta {
+  bottom: 160px; /* sobe até sair do envelope */
+}
+
+.envelope.abrir {
+  transform: translateY(130px); /* ou ajuste para o tanto que quiser descer */  
+}
+
+.envelope.voar-envelope {
+  animation: voarEnvelope 2s ease-in-out forwards;  
+}
+
+
+/* ======================== */
+/* CARTA PRINCIPAL          */
+/* ======================== */
+.carta {
+  position: absolute;
+  bottom: -80px; /* começa escondida lá dentro */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 380px;
+  height: 340px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.12), 0 10px 24px rgba(0, 0, 0, 0.15);
+  transition: bottom 1.2s ease;
+  z-index: 4;
+  padding: 30px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.carta-wrapper {
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+}
+
+.carta.expandida {
+  position: fixed;
+  top: 0%;
+  left: 50%;
+  width: 100vw;
+  height: 200vh;
+  transform: translate(-50%, -50%);
+  border-radius: 0;
+  z-index: 999;
+  background: #fff;
+  transition: all 1.4s ease;
+  overflow-y: auto;
+}
+
+
+
+/* ======================== */
+/* LOGIN DENTRO DA CARTA    */
+/* ======================== */
+#login-box {
+  text-align: center;
+  font-size: 1.1rem;
+  font-family: 'Dancing Script', cursive;
+}
+
+#login-box h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+input {
+  font-size: 1.1rem;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+button.btn-danger {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  background-color: #e63946;
+  border: none;
+}
+
+button.btn-danger:active {
+  transform: scale(0.96);
+  background-color: #c62828;
+}
+
+.login-frase-final {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #a0003d;
+  font-style: italic;
+  font-family: 'Dancing Script', cursive;
+}
+
+/* ======================== */
+/* BOTÃO INICIAL TOUCH      */
+/* ======================== */
+.convite-touch {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 100;
+  animation: flutuar 3s ease-in-out infinite;
+  transition: all 0.5s ease;
+}
+
+.cartinha-pulando {
+  font-size: 3rem;
+  animation: bounce 1.5s infinite;
+}
+
+.texto-touch {
+  margin-top: 10px;
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-family: 'Dancing Script', cursive;
+}
+
+.convite-touch.fadeOut {
+  opacity: 0;
+  transform: scale(0.8) translate(-50%, -50%);
+  pointer-events: none;
+}
+
+
+.coracao {
+  position: absolute;
+  bottom: 0;
+  animation: subir 10s infinite ease-in;
+  font-size: 2rem;
+  color: #ff4b7d;
+  opacity: 0;
+}
+
+
+/* ======================== */
+/* Efeito carta voando  */
+/* ======================== */
+
+
+
+/* ======================== */
+/* ANIMAÇÕES                */
+/* ======================== */
+
+@keyframes voarEnvelope {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-300px) rotate(-8deg) scale(0.8);
+  }
+}
+
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translate(-50%, -48%); }
+  50% { transform: translate(-50%, -52%); }
+}
+
+@keyframes subir {
+  0% { transform: translateY(100vh); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+@keyframes dançarNoAr {
+  0% {
+    transform: translate(-50%, 0) rotate(0deg) scale(1);
+  }
+  30% {
+    transform: translate(-60%, -100px) rotate(-3deg) scale(1.05);
+  }
+  60% {
+    transform: translate(-40%, -200px) rotate(3deg) scale(1.1);
+  }
+  100% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1.1);
+    width: 90vw;
+    height: 90vh;
+  }
+}
+
+.carta.dançar-e-centralizar {
+  position: fixed;
+  animation: dançarNoAr 2.5s ease-in-out forwards;
+  z-index: 999;
+  box-shadow: 0 40px 60px rgba(0, 0, 0, 0.25);
+}
+
