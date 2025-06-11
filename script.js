@@ -1,4 +1,4 @@
-// Animação da mensagem no topo (digitando)
+// Mensagem animada no topo
 const msg = "Você recebeu uma carta de alguém que te ama muito...";
 let i = 0;
 function digitar() {
@@ -20,7 +20,7 @@ function mascaraData(input) {
   input.value = valor;
 }
 
-// Validação do login + expansão da carta
+// Validação e animação principal
 function validarLogin() {
   const r1 = document.getElementById("input1").value.trim();
   const r2 = document.getElementById("input2").value.trim().toLowerCase();
@@ -28,34 +28,38 @@ function validarLogin() {
   if (r1 === "19/10/2023" && (r2 === "praça da light" || r2 === "light")) {
     alert("💖 Login aceito! Pronta para a próxima surpresa?");
 
-    // Tocar música
     const musica = document.getElementById("musicaAmor");
-    musica.play().catch(() => {
-      console.log("Autoplay bloqueado — pode ser necessário interação.");
-    });
+    musica.play().catch(() => {});
 
-    // Aplica animação à carta e envelope
-    const carta = document.querySelector('.carta');
     const envelope = document.querySelector('.envelope');
+    const carta = document.querySelector('.carta');
+    const loginBox = document.getElementById("login-box");
+    const conteudo = document.getElementById("conteudo-amor");
 
-    carta.classList.add('dançar-e-centralizar');
+    // Etapa 1: envelope voa e some
     envelope.classList.add('voar-envelope');
 
-    // Após animações, mostra conteúdo
+    // Etapa 2: carta faz voo dramático
+    carta.classList.add('voar');
+
+    // Etapa 3: após o voo, carta se posiciona e revela conteúdo
     setTimeout(() => {
-      envelope.style.display = 'none';
-      document.getElementById("login-box").style.display = "none";
-      document.getElementById("conteudo-amor").style.display = "block";
+      carta.classList.remove('voar');
+      carta.classList.add('expandida');
+      loginBox.style.display = 'none';
+      conteudo.style.display = 'block';
+      document.getElementById("mensagem-topo").classList.add("sumir");
+      document.querySelector('.envelope-body').classList.add('sumir');
+      document.querySelector('.envelope-flap').classList.add('sumir');
+      document.getElementById("mensagem-topo").classList.add("sumir");
       iniciarSwiper();
-    }, 2500); // tempo da animação
+    }, 1200); // tempo de voo da carta
   } else {
-    alert("Erro isso Viviane? Tá brincando, né? tenta de novo meu Galak!");
+    alert("Erro isso Viviane? Tenta de novo meu Galak!");
   }
 }
 
-
-
-// Animação de toque inicial
+// Toque inicial
 function iniciarCarta() {
   const convite = document.querySelector('.convite-touch');
   convite.classList.add('fadeOut');
@@ -65,31 +69,31 @@ function iniciarCarta() {
   }, 800);
 }
 
-// Animação de abrir envelope
+// Abrir envelope
 function abrirEnvelope() {
   const envelope = document.querySelector('.envelope');
   envelope.classList.add('abrir');
-  
-  const selo = document.querySelector('.selo-coração');
-  if (selo) selo.style.opacity = 0;
 }
 
-// SwiperJS: carrossel de fotos
+// Iniciar Swiper
 function iniciarSwiper() {
   new Swiper(".mySwiper", {
     loop: true,
     effect: "coverflow",
     grabCursor: true,
     centeredSlides: true,
-    slidesPerView: "auto",
+    slidesPerView: 1, // ← alterado de "auto" para 1
+    spaceBetween: 30,
     coverflowEffect: {
-      rotate: 50,
+      rotate: 30,
       stretch: 0,
       depth: 100,
       modifier: 1,
       slideShadows: true,
     },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true, // ← mantém isso
+    },
   });
 }
-
-

@@ -5,60 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Uma Carta Para o Amor da Minha Vida</title>
 
-  <!-- Bootstrap e fontes -->
+  <!-- Estilos -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 </head>
 <body>
 
-  <!-- Mensagem topo animada -->
+  <!-- Mensagem digitando no topo -->
   <div id="mensagem-topo">|</div>
 
-  <!-- Envelope central -->
+  <!-- Envelope -->
   <div id="envelope-container">
     <div class="envelope">
-  
-      <!-- 1. Carta primeiro (atrás do corpo) -->
+      
+      <!-- Carta com login + conteúdo -->
       <div class="carta-wrapper">
         <div class="carta" id="login-section">
           <div id="login-box">
             <h1>Para acessar seu presente...</h1>
-  
             <input type="text" class="form-control mb-2" id="input1"
               placeholder="Data do nosso casamento dd/mm/aaaa"
               oninput="mascaraData(this)" maxlength="10">
-  
             <input type="text" class="form-control mb-3" id="input2"
               placeholder="Nome da praça onde tudo começou 💘">
-  
             <button class="btn btn-danger" onclick="validarLogin()">Entrar</button>
-  
             <p class="login-frase-final">Esse é só o começo do que preparei pra você... 💖</p>
+          </div>
+
+          <!-- Conteúdo que aparece após login -->
+          <div id="conteudo-amor" style="display: none;">
+            <div class="mensagem-central">
+              <h2 class="titulo-memoria">Minhas Memórias com Você</h2>
+              <p class="subtitulo-memoria">Cada imagem abaixo é uma história do nosso amor...</p>
+            </div>
+
+            <div class="swiper-container mySwiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img src="fotos/1.jpg" alt="Memória 1">
+                  <p class="legenda">Nosso primeiro passeio 💑</p>
+                </div>
+                <div class="swiper-slide">
+                  <img src="fotos/2.jpg" alt="Memória 2">
+                  <p class="legenda">O dia que dissemos sim 💍</p>
+                </div>
+                <div class="swiper-slide">
+                  <img src="fotos/3.jpg" alt="Memória 3">
+                  <p class="legenda">Risadas na praça 🌳</p>
+                </div>
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="agradecimento-final">
+              <p>Obrigado por ser meu mundo, minha luz e meu amor.</p>
+              <p>Feliz Dia dos Namorados! 💖</p>
+            </div>
           </div>
         </div>
       </div>
-      
 
-      <!-- 2. Envelope sobre a carta -->
+      <!-- Corpo e aba do envelope -->
       <div class="envelope-body"></div>
-  
-      <!-- 3. Aba por cima de tudo -->
       <div class="envelope-flap"></div>
-  
     </div>
   </div>
 
-  <!-- Convite para toque no mobile -->
+  <!-- Toque inicial -->
   <div class="convite-touch" onclick="iniciarCarta()">
     <div class="cartinha-pulando">💌</div>
     <p class="texto-touch">Toque aqui ...</p>
   </div>
 
-  <!-- Nossa música que será tocada assim que acertar o login -->
+  <!-- Música -->
   <audio id="musicaAmor" src="audio/Alicia Keys - If I Ain't Got You (Official HD Video).mp3" preload="auto"></audio>
 
-  <!-- Script principal -->
+  <!-- Scripts -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

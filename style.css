@@ -7,7 +7,7 @@ html, body {
   padding: 0;
   font-family: 'Dancing Script', cursive;
   background: linear-gradient(to bottom, #ffd3dc, #ffe8ec);
-  overflow: hidden;
+  overflow: auto;
 }
 
 /* ======================== */
@@ -50,7 +50,6 @@ html, body {
   transition: transform 1.2s ease;
 }
 
-/* Aba do envelope */
 .envelope-flap {
   position: absolute;
   top: 0;
@@ -60,17 +59,15 @@ html, body {
   border-left: 200px solid transparent;
   border-right: 200px solid transparent;
   border-bottom: 120px solid #e63946;
-  z-index: 0; /* sempre por cima da carta */
+  z-index: 0;
   transform-origin: top center;
   transition: transform 0.8s ease;
 }
 
 .envelope.abrir .envelope-flap {
-  z-index: 0; /* Aba vai para trás da carta */
-  
+  z-index: 0;
 }
 
-/* Corpo inferior do envelope */
 .envelope-body {
   position: absolute;
   bottom: 0;
@@ -79,22 +76,46 @@ html, body {
   height: 160px;
   background-color: #e63946;
   border-radius: 0 0 10px 10px;
-  overflow: hidden; /* ESSENCIAL para esconder a carta */
+  overflow: hidden;
   z-index: 2;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Quando o envelope for aberto */
 .envelope.abrir .carta {
-  bottom: 160px; /* sobe até sair do envelope */
+  bottom: 160px;
 }
 
 .envelope.abrir {
-  transform: translateY(130px); /* ou ajuste para o tanto que quiser descer */  
+  transform: translateY(130px);
 }
 
+/* ✅ AJUSTE FINAL: ENVELOPE VOANDO ATÉ O CENTRO E FICANDO VISÍVEL */
 .envelope.voar-envelope {
-  animation: voarEnvelope 2s ease-in-out forwards;  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.1);
+  animation: despedidaEnvelope 2s ease-in-out forwards;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.envelope .envelope-body.sumir {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.envelope .envelope-flap.sumir {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+
+#mensagem-topo.sumir {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 
@@ -103,7 +124,7 @@ html, body {
 /* ======================== */
 .carta {
   position: absolute;
-  bottom: -80px; /* começa escondida lá dentro */
+  bottom: -80px;
   left: 50%;
   transform: translateX(-50%);
   width: 92%;
@@ -130,20 +151,36 @@ html, body {
   overflow: hidden;
 }
 
-.carta.expandida {
+/* ✈️ Animação da carta voando para o lado */
+.carta.voar {
   position: fixed;
-  top: 0%;
-  left: 50%;
-  width: 100vw;
-  height: 200vh;
-  transform: translate(-50%, -50%);
-  border-radius: 0;
+  top: 10%;
+  left: 80%;
+  transform: translate(-50%, -50%) scale(0.9) rotate(10deg);
+  transition: all 1.2s ease-in-out;
   z-index: 999;
-  background: #fff;
-  transition: all 1.4s ease;
-  overflow-y: auto;
 }
 
+/* 📜 Expansão central */
+.carta.expandida {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90vw;                  /* ← MUITO mais proporcional */
+  max-width: 800px;             /* ← Para limitar em telas grandes */
+  height: 80vh;                 /* ← Um pouco mais alto para conteúdo respirar */
+  transform: translate(-50%, -50%);
+  background: #fffdf9;          /* ← Tom suave tipo papel */
+  border: 6px solid #e6b8b8;    /* ← Moldura em tom rosé */
+  box-shadow:
+    0 0 0 10px #fff,            /* ← Moldura clara adicional */
+    0 10px 40px rgba(0, 0, 0, 0.15); /* ← Sombra leve */
+    overflow-y: auto;
+  padding: 30px;
+  z-index: 1000;
+  border-radius: 16px;
+  transition: all 10s ease;
+}
 
 
 /* ======================== */
@@ -224,45 +261,19 @@ button.btn-danger:active {
   pointer-events: none;
 }
 
-
-.coracao {
-  position: absolute;
-  bottom: 0;
-  animation: subir 10s infinite ease-in;
-  font-size: 2rem;
-  color: #ff4b7d;
-  opacity: 0;
-}
-
-
 /* ======================== */
-/* Efeito carta voando  */
+/* ANIMAÇÕES GERAIS         */
 /* ======================== */
 
-
-
-/* ======================== */
-/* ANIMAÇÕES                */
-/* ======================== */
-
+/* ✅ Ajustada: envelope voa até o centro */
 @keyframes voarEnvelope {
   0% {
-    opacity: 1;
-    transform: translateY(0) rotate(0deg) scale(1);
+    transform: translateY(0) scale(1) rotate(0deg);
   }
   100% {
-    opacity: 0;
-    transform: translateY(-300px) rotate(-8deg) scale(0.8);
+    transform: translate(-50%, -50%) scale(1.1) rotate(0deg);
   }
 }
-
-
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
@@ -274,35 +285,122 @@ button.btn-danger:active {
   50% { transform: translate(-50%, -52%); }
 }
 
-@keyframes subir {
-  0% { transform: translateY(100vh); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateY(-10vh); opacity: 0; }
-}
 
-@keyframes dançarNoAr {
-  0% {
-    transform: translate(-50%, 0) rotate(0deg) scale(1);
-  }
-  30% {
-    transform: translate(-60%, -100px) rotate(-3deg) scale(1.05);
-  }
-  60% {
-    transform: translate(-40%, -200px) rotate(3deg) scale(1.1);
-  }
-  100% {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(0deg) scale(1.1);
-    width: 90vw;
-    height: 90vh;
-  }
-}
 
-.carta.dançar-e-centralizar {
+/* ======================== */
+/* PARALLAX + HOMENAGEM     */
+/* ======================== */
+.parallax-bg {
+  background-image: url('fotos/bg-romantico.jpg');
+  background-size: cover;
+  background-position: center;
   position: fixed;
-  animation: dançarNoAr 2.5s ease-in-out forwards;
-  z-index: 999;
-  box-shadow: 0 40px 60px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  opacity: 0.15;
+  filter: blur(1px);
 }
 
+.mensagem-central {
+  text-align: center;
+  margin: 60px auto 20px;
+  padding: 0 20px;
+  color: #a0003d;
+  font-size: 2rem;
+  font-family: 'Dancing Script', cursive;
+}
+
+/* ======================== */
+/* SWIPER CARROSSEL         */
+/* ======================== */
+.swiper-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 40px auto;
+  overflow: hidden;
+}
+
+.swiper-slide {
+  background: #fff0f4;
+  border-radius: 14px;
+  text-align: center;
+  padding: 15px 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.swiper-slide {
+  background: #fff0f4;
+  border-radius: 14px;
+  text-align: center;
+  padding: 15px 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.swiper-wrapper {
+  display: flex;
+}
+
+.legenda {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #a0003d;
+  font-style: italic;
+  font-family: 'Dancing Script', cursive;
+}
+
+/* ======================== */
+/* AGRADECIMENTO FINAL      */
+/* ======================== */
+.agradecimento-final {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #a0003d;
+  margin: 60px 20px;
+  font-family: 'Dancing Script', cursive;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+
+/* ======================== */
+/* Texto da carta aberta      */
+/* ======================== */
+
+.titulo-memoria {
+  font-size: 2.8rem;
+  color: #a0003d;
+  margin-bottom: 10px;
+  animation: fadeInTopo 1.2s ease-out;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.08);
+}
+
+.subtitulo-memoria {
+  font-size: 1.4rem;
+  color: #7a0030;
+  font-style: italic;
+  animation: fadeInTopo 1.6s ease-out;
+  opacity: 0.9;
+}
+
+@keyframes fadeInTopo {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
