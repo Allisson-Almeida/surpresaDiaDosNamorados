@@ -26,7 +26,7 @@ function validarLogin() {
   const r2 = document.getElementById("input2").value.trim().toLowerCase();
 
   if (r1 === "19/10/2023" && (r2 === "praça da light" || r2 === "light")) {
-    alert("💖 Login aceito! Pronta para a próxima surpresa?");
+    alert("💖 Login aceito! Preparada?");
 
     const musica = document.getElementById("musicaAmor");
     musica.play().catch(() => {});
@@ -51,7 +51,7 @@ function validarLogin() {
       loginBox.style.display = 'none';
       conteudo.style.display = 'block';
       iniciarSwiper();
-    },100);
+    },300);
 
   } else {
     alert("Erro isso Viviane? Tenta de novo meu Galak!");
@@ -106,16 +106,16 @@ function finalizarCarta() {
 
   const fraseFinal = `Fazemos muitas escolhas na vida — algumas boas, outras nem tanto.
 Uma coisa é certa: as melhores escolhas são aquelas que Deus faz por nós.
-Indubitavelmente **você foi escolhida por Deus pra mim**, minha esposa e eterna namorada.
+Com toda certeza **você foi escolhida por Deus pra mim**, minha esposa e eterna namorada.
 
-Feliz Dia dos Namorados! 💖`;
+<span style="font-size: 1.4rem; color: #d40045;"><strong>Feliz Dia dos Namorados! 💖</strong></span>`;
 
   let i = 0;
   function digitarFinal() {
     if (i < fraseFinal.length) {
       document.getElementById("texto-final").innerHTML = fraseFinal.slice(0, i + 1) + '|';
       i++;
-      setTimeout(digitarFinal, 50); // digitação um pouco mais rápida
+      setTimeout(digitarFinal, 80); // digitação um pouco mais rápida
     } else {
       document.getElementById("texto-final").innerHTML = fraseFinal;
       setTimeout(recolherCarta, 3000);
