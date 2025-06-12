@@ -157,7 +157,6 @@ html, body {
   top: 10%;
   left: 80%;
   transform: translate(-50%, -50%) scale(0.9) rotate(10deg);
-  transition: all 1.2s ease-in-out;
   z-index: 999;
 }
 
@@ -179,7 +178,7 @@ html, body {
   padding: 30px;
   z-index: 1000;
   border-radius: 16px;
-  transition: all 10s ease;
+  transition: all 1s ease;
 }
 
 
@@ -304,8 +303,8 @@ button.btn-danger:active {
 
 .mensagem-central {
   text-align: center;
-  margin: 60px auto 20px;
-  padding: 0 20px;
+  margin: 20px auto 20px;
+  padding: 0 10px;
   color: #a0003d;
   font-size: 2rem;
   font-family: 'Dancing Script', cursive;
@@ -319,33 +318,44 @@ button.btn-danger:active {
   max-width: 800px;
   margin: 40px auto;
   overflow: hidden;
-}
-
-.swiper-slide {
-  background: #fff0f4;
-  border-radius: 14px;
-  text-align: center;
-  padding: 15px 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.swiper-slide {
-  background: #fff0f4;
-  border-radius: 14px;
-  text-align: center;
-  padding: 15px 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
 }
 
 .swiper-wrapper {
   display: flex;
+  transition-timing-function: ease !important;
+  transform: translate3d(0, 0, 0); /* Força renderização com GPU */
+
 }
+
+
+
+.swiper-slide {
+  background: #fff0f4;
+  border-radius: 14px;
+  text-align: center;
+  padding: 15px 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* ou width: 300px; */
+  min-height: 80%;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  will-change: transform, opacity;
+}
+
+.swiper-pagination {
+  position: relative;
+  z-index: 9999;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.swiper-pagination-bullet {
+  cursor: pointer;
+}
+
 
 .legenda {
   margin-top: 10px;
@@ -404,3 +414,150 @@ button.btn-danger:active {
     transform: translateY(0);
   }
 }
+
+
+/* Estilo tipo polaroid apenas nas imagens do Swiper */
+.swiper-slide img {
+  width: 90%;
+  max-width: 340px;
+  max-height: 37vh;
+  padding: 14px 14px 34px;
+  background: #fff;
+  border: 6px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.swiper-slide:nth-child(even) img {
+  transform: rotate(-2deg);
+}
+
+.swiper-slide:nth-child(odd) img {
+  transform: rotate(2deg);
+}
+
+
+  .agradecimento-final {
+    font-size: 1.1rem;
+    padding: 14px;
+    margin: 30px 8px;
+  }
+
+  input {
+    font-size: 1rem;
+    padding: 8px 10px;
+  }
+
+  button.btn-danger {
+    font-size: 1rem;
+    padding: 8px 14px;
+  }
+
+  .login-frase-final {
+    font-size: 1.2rem;
+  }
+}
+
+
+
+.btn-final {
+  margin-top: 20px;
+  background-color: #e63946;
+  color: #fff;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.3rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.btn-final:hover {
+  transform: scale(1.05);
+}
+
+
+#mensagem-final {
+  font-size: 1.5rem; /* ou 1rem para menor ainda */
+  line-height: 1.3;
+  max-width: 90%;
+  margin: 20px auto;
+  white-space: pre-wrap; /* mantém as quebras de linha */
+  text-align: center;
+  font-family: 'Dancing Script', cursive;
+  color: #a0003d;
+}
+
+/* Centraliza o envelope/cartinha com tipinho visível */
+#envelope-container {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.envelope.retornar {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 1s ease-in-out;
+  z-index: 1500;
+}
+
+/* Mensagem "Eu te amo" por cima da carta */
+#mensagem-topo {
+  position: absolute;
+  top: 20px;
+  z-index: 2000;
+  font-size: 1.8rem;
+  color: #a0003d;
+}
+
+#mensagem-topo.final-volta {
+  top: 40%;
+  transition: all 5s ease;
+}
+
+/* Garante que a carta fica parcialmente visível */
+.carta.recolhida {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(60%);
+  width: 92%;
+  max-width: 380px;
+  height: 160px;
+  z-index: 1;
+  transition: all 1s ease;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+
+
+
+
+@media (max-width: 768px) {
+  .carta.expandida {
+    width: 75vw;
+    height: 75vh;
+    padding: 18px;
+    border-width: 3px;
+    border-radius: 12px;
+  }
+
+  .titulo-memoria {
+    font-size: 1.9rem;
+  }
+
+  .subtitulo-memoria {
+    font-size: 1.1rem;
+  }
+
+  
+
